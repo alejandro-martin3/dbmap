@@ -1,39 +1,58 @@
 # Entorno de desarrollo - dBMap
 
-## Ordenador 1
+Versiones mínimas que deben coincidir entre ordenadores para evitar problemas de compilación.
 
-### Sistema
-- Sistema operativo: Windows
-- Usuario/ruta del proyecto: C:\Users\aleja\Projects\dbmap
+## Java / JDK
 
-### Git
-- Git version: 2.45.1.windows.1
+- JDK: OpenJDK 21.0.6 Temurin
 
-### Java instalado en el sistema
-- Java version: OpenJDK 21.0.6 Temurin
-- Build: 21.0.6+7-LTS
+## Android Studio
 
-### Android Studio
-- Versión de Android Studio: Android Studio Quail 1 | 2026.1.1
-- JDK usado por Android Studio: PENDIENTE
-- Gradle JDK: PENDIENTE
+- Android Studio: Quail 1 | 2026.1.1
 
-### Proyecto Android
-- Lenguaje: Kotlin
-- Tipo de interfaz: XML
-- minSdk: Android 8.0 / API 26
-- compileSdk: PENDIENTE
-- targetSdk: PENDIENTE
-- Android Gradle Plugin: PENDIENTE
-- Gradle Wrapper: PENDIENTE
-- Kotlin plugin: PENDIENTE
+## Gradle
 
-### SDK Android
-- Android SDK Platform: PENDIENTE
-- Android SDK Build Tools: PENDIENTE
-- Android SDK Platform Tools: PENDIENTE
-- Android Emulator: PENDIENTE
+- Gradle Wrapper: 9.4.1
+- Android Gradle Plugin: 9.2.1
+- Kotlin usado por Gradle: 2.3.0
 
-### Servicios externos
-- Firebase Firestore: PENDIENTE
-- Google Maps API: PENDIENTE
+## Android SDK
+
+- compileSdk: Android 36.1
+- targetSdk: 36
+- minSdk: 26
+- Android SDK Build Tools: 36.0.0
+- Android SDK Platform Tools: 35.0.2
+
+## Proyecto
+
+- Namespace: com.alejandromartin.dbmap
+- Application ID: com.alejandromartin.dbmap
+- Interfaz: XML
+- ViewBinding: activado
+
+## Dependencias principales
+
+- AndroidX Core KTX: 1.10.1
+- AndroidX AppCompat: 1.6.1
+- AndroidX ConstraintLayout: 2.1.4
+- AndroidX Activity KTX: 1.8.0
+- AndroidX Navigation Fragment KTX: 2.6.0
+- AndroidX Navigation UI KTX: 2.6.0
+- Material Components: 1.10.0
+- JUnit: 4.13.2
+
+## Comandos de comprobación
+
+```powershell
+.\gradlew.bat -v
+.\gradlew.bat build
+```
+
+## No subir al repositorio
+
+- local.properties
+- .idea/
+- .gradle/
+- build/
+- app/build/
