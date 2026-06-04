@@ -3,26 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/medirFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.alejandromartin.dbmap.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        android:id="@+id/medirFragment"
+        android:name="com.alejandromartin.dbmap.MedirFragment"
+        android:label="@string/titulo_medicion"
+        tools:layout="@layout/fragment_medir">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_medirFragment_to_mapaFragment"
+            app:destination="@id/mapaFragment" />
+
+        <action
+            android:id="@+id/action_medirFragment_to_historicoFragment"
+            app:destination="@id/historicoFragment" />
+
+        <action
+            android:id="@+id/action_medirFragment_to_ajustesFragment"
+            app:destination="@id/ajustesFragment" />
+
     </fragment>
+
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.alejandromartin.dbmap.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        android:id="@+id/mapaFragment"
+        android:name="com.alejandromartin.dbmap.MapaFragment"
+        android:label="@string/titulo_mapa"
+        tools:layout="@layout/fragment_mapa" />
 
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
+    <fragment
+        android:id="@+id/historicoFragment"
+        android:name="com.alejandromartin.dbmap.HistoricoFragment"
+        android:label="@string/titulo_historico"
+        tools:layout="@layout/fragment_historico" />
+
+    <fragment
+        android:id="@+id/ajustesFragment"
+        android:name="com.alejandromartin.dbmap.AjustesFragment"
+        android:label="@string/titulo_ajustes"
+        tools:layout="@layout/fragment_ajustes" />
+
 </navigation>
