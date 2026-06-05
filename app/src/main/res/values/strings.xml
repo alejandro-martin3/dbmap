@@ -19,4 +19,10 @@
     <!-- Pantalla de ajustes -->
     <string name="titulo_ajustes">Ajustes</string>
     <string name="ajustes_placeholder">Aquí se configurarán preferencias de privacidad y visualización.</string>
+
+    <!-- Menu navegación -->
+    <string name="menu_medicion">Medición</string>
+    <string name="menu_mapa">Mapa</string>
+    <string name="menu_historico">Histórico</string>
+    <string name="menu_ajustes">Ajustes</string>
 </resources>
