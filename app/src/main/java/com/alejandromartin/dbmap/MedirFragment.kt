@@ -14,6 +14,9 @@ import androidx.fragment.app.Fragment
 class MedirFragment : Fragment(R.layout.fragment_medir) {
 
     private lateinit var resultadoTextView: TextView
+    private lateinit var botonMedir: Button
+
+    private val noiseService = NoiseService()
 
     private val requestAudioPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
@@ -28,7 +31,7 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
         super.onViewCreated(view, savedInstanceState)
 
         resultadoTextView = view.findViewById(R.id.textResultadoRuido)
-        val botonMedir = view.findViewById<Button>(R.id.botonMedir)
+        botonMedir = view.findViewById(R.id.botonMedir)
 
         botonMedir.setOnClickListener {
             comprobarPermisoYMedir()
@@ -57,7 +60,24 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
     }
 
     private fun iniciarMedicion() {
-        resultadoTextView.text = getString(R.string.medicion_pendiente)
+        resultadoTextView.text = getString(R.string.midiendo_ruido)
+        botonMedir.isEnabled = false
+
+        Thread {
+            val db = noiseService.medirRuidoDurante()
+
+            activity?.runOnUiThread {
+                if (!isAdded) return@runOnUiThread
+
+                resultadoTextView.text = if (db > 0.0) {
+                    getString(R.string.resultado_ruido, db)
+                } else {
+                    getString(R.string.error_medicion)
+                }
+
+                botonMedir.isEnabled = true
+            }
+        }.start()
     }
 
     private fun mostrarPermisoDenegado() {
