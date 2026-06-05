@@ -34,4 +34,5 @@
     <string name="midiendo_ruido">Midiendo ruido...</string>
     <string name="resultado_ruido">Nivel aproximado: %.1f dB</string>
     <string name="error_medicion">No se ha podido realizar la medición.</string>
+    <string name="senal_demasiado_baja">Señal demasiado baja para estimar el ruido.</string>
 </resources>

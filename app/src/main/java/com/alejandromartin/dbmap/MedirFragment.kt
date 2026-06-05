@@ -18,6 +18,10 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
 
     private val noiseService = NoiseService()
 
+    companion object {
+        private const val MIN_RELIABLE_DB = 20.0
+    }
+
     private val requestAudioPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
@@ -69,10 +73,10 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
             activity?.runOnUiThread {
                 if (!isAdded) return@runOnUiThread
 
-                resultadoTextView.text = if (db > 0.0) {
-                    getString(R.string.resultado_ruido, db)
-                } else {
-                    getString(R.string.error_medicion)
+                resultadoTextView.text = when {
+                    db <= 0.0 -> getString(R.string.error_medicion)
+                    db < MIN_RELIABLE_DB -> getString(R.string.senal_demasiado_baja)
+                    else -> getString(R.string.resultado_ruido, db)
                 }
 
                 botonMedir.isEnabled = true
