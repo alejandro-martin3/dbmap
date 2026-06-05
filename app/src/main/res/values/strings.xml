@@ -31,7 +31,7 @@
     <string name="permiso_microfono_explicacion">La app necesita usar el micrófono para calcular el nivel de ruido.</string>
 
     <!-- Mensajes medicion ruido -->
-    <string name="midiendo_ruido">Midiendo ruido...</string>
+    <string name="midiendo_ruido">Midiendo ruido…</string>
     <string name="resultado_ruido">Nivel aproximado: %.1f dB</string>
     <string name="error_medicion">No se ha podido realizar la medición.</string>
     <string name="senal_demasiado_baja">Señal demasiado baja para estimar el ruido.</string>
@@ -42,4 +42,10 @@
     <string name="ubicacion_no_disponible">No se ha podido obtener la zona aproximada.</string>
     <string name="resultado_ruido_con_zona">Nivel aproximado: %.1f dB\nZona aproximada: %s</string>
     <string name="resultado_ruido_con_info">Nivel aproximado: %.1f dB\n%s</string>
+
+    <!-- Mensajes guardado de mediciones en base de datos -->
+    <string name="guardando_medicion">Guardando medición…</string>
+    <string name="medicion_guardada">Medición guardada correctamente.</string>
+    <string name="error_guardar_medicion">No se ha podido guardar la medición.</string>
+    <string name="resultado_ruido_zona_estado">Nivel aproximado: %.1f dB\nZona aproximada: %s\n%s</string>
 </resources>

@@ -18,6 +18,7 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
     private lateinit var locationHelper: LocationHelper
 
     private val noiseService = NoiseService()
+    private val firestoreManager = FirestoreManager()
     private var ultimoDbValido: Double? = null
 
     companion object {
@@ -141,7 +142,37 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
             longitude = location.longitude
         )
 
-        resultadoTextView.text = getString(R.string.resultado_ruido_con_zona, db, zona)
+        resultadoTextView.text = getString(
+            R.string.resultado_ruido_zona_estado,
+            db,
+            zona,
+            getString(R.string.guardando_medicion)
+        )
+
+        firestoreManager.guardarMedicion(
+            zonaId = zona,
+            nivelRuido = db,
+            onSuccess = {
+                if (!isAdded) return@guardarMedicion
+
+                resultadoTextView.text = getString(
+                    R.string.resultado_ruido_zona_estado,
+                    db,
+                    zona,
+                    getString(R.string.medicion_guardada)
+                )
+            },
+            onError = {
+                if (!isAdded) return@guardarMedicion
+
+                resultadoTextView.text = getString(
+                    R.string.resultado_ruido_zona_estado,
+                    db,
+                    zona,
+                    getString(R.string.error_guardar_medicion)
+                )
+            }
+        )
     }
 
     private fun mostrarResultadoConInfo(info: String) {

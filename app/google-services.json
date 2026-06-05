@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "218647394457",
+    "project_id": "dbmap-f0e60",
+    "storage_bucket": "dbmap-f0e60.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218647394457:android:cae75f58d686134519e008",
+        "android_client_info": {
+          "package_name": "com.alejandromartin.dbmap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMfK7TaZWZve0eU-OxPYPy93J_jdh7QGU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
