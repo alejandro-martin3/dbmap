@@ -1,7 +1,9 @@
 package com.alejandromartin.dbmap
 
 import com.alejandromartin.dbmap.model.Medicion
+import com.alejandromartin.dbmap.model.Zona
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 
 class FirestoreManager {
 
@@ -13,17 +15,33 @@ class FirestoreManager {
         onSuccess: () -> Unit,
         onError: (Exception) -> Unit
     ) {
-        val docRef = db.collection("mediciones").document()
+        val medicionRef = db.collection("mediciones").document()
+        val zonaRef = db.collection("zonas").document(zonaId)
+
+        val centroZona = ZoneManager.getApproximateCenter(zonaId)
+
+        val zona = Zona(
+            zonaId = zonaId,
+            geohashReducido = zonaId,
+            nombreZona = null,
+            centroLatitud = centroZona.first,
+            centroLongitud = centroZona.second
+        )
 
         val medicion = Medicion(
-            medicionId = docRef.id,
+            medicionId = medicionRef.id,
             zonaId = zonaId,
             agregadoId = null,
             nivelRuido = nivelRuido,
             fechaHora = System.currentTimeMillis()
         )
 
-        docRef.set(medicion)
+        val batch = db.batch()
+
+        batch.set(zonaRef, zona, SetOptions.merge())
+        batch.set(medicionRef, medicion)
+
+        batch.commit()
             .addOnSuccessListener {
                 onSuccess()
             }
