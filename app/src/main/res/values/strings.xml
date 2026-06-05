@@ -25,4 +25,8 @@
     <string name="menu_mapa">Mapa</string>
     <string name="menu_historico">Histórico</string>
     <string name="menu_ajustes">Ajustes</string>
+
+    <!-- Mensajes permisos -->
+    <string name="permiso_microfono_denegado">Permiso de micrófono denegado. No se puede medir ruido.</string>
+    <string name="permiso_microfono_explicacion">La app necesita usar el micrófono para calcular el nivel de ruido.</string>
 </resources>
