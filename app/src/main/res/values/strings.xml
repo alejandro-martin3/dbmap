@@ -35,4 +35,11 @@
     <string name="resultado_ruido">Nivel aproximado: %.1f dB</string>
     <string name="error_medicion">No se ha podido realizar la medición.</string>
     <string name="senal_demasiado_baja">Señal demasiado baja para estimar el ruido.</string>
+
+    <!-- Mensajes ubicacion mediciones -->
+    <string name="permiso_ubicacion_denegado">Permiso de ubicación denegado. La medición no puede asociarse a una zona.</string>
+    <string name="permiso_ubicacion_explicacion">La app necesita una ubicación aproximada para asociar la medición a una zona.</string>
+    <string name="ubicacion_no_disponible">No se ha podido obtener la zona aproximada.</string>
+    <string name="resultado_ruido_con_zona">Nivel aproximado: %.1f dB\nZona aproximada: %s</string>
+    <string name="resultado_ruido_con_info">Nivel aproximado: %.1f dB\n%s</string>
 </resources>

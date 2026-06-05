@@ -15,8 +15,10 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
 
     private lateinit var resultadoTextView: TextView
     private lateinit var botonMedir: Button
+    private lateinit var locationHelper: LocationHelper
 
     private val noiseService = NoiseService()
+    private var ultimoDbValido: Double? = null
 
     companion object {
         private const val MIN_RELIABLE_DB = 20.0
@@ -27,7 +29,16 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
             if (isGranted) {
                 iniciarMedicion()
             } else {
-                mostrarPermisoDenegado()
+                mostrarPermisoMicrofonoDenegado()
+            }
+        }
+
+    private val requestLocationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                mostrarResultadoConZona()
+            } else {
+                mostrarResultadoConInfo(getString(R.string.permiso_ubicacion_denegado))
             }
         }
 
@@ -36,13 +47,14 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
 
         resultadoTextView = view.findViewById(R.id.textResultadoRuido)
         botonMedir = view.findViewById(R.id.botonMedir)
+        locationHelper = LocationHelper(requireContext().applicationContext)
 
         botonMedir.setOnClickListener {
-            comprobarPermisoYMedir()
+            comprobarPermisoMicrofonoYMedir()
         }
     }
 
-    private fun comprobarPermisoYMedir() {
+    private fun comprobarPermisoMicrofonoYMedir() {
         val permisoConcedido = ContextCompat.checkSelfPermission(
             requireContext(),
             Manifest.permission.RECORD_AUDIO
@@ -73,10 +85,20 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
             activity?.runOnUiThread {
                 if (!isAdded) return@runOnUiThread
 
-                resultadoTextView.text = when {
-                    db <= 0.0 -> getString(R.string.error_medicion)
-                    db < MIN_RELIABLE_DB -> getString(R.string.senal_demasiado_baja)
-                    else -> getString(R.string.resultado_ruido, db)
+                when {
+                    db <= 0.0 -> {
+                        resultadoTextView.text = getString(R.string.error_medicion)
+                    }
+
+                    db < MIN_RELIABLE_DB -> {
+                        resultadoTextView.text = getString(R.string.senal_demasiado_baja)
+                    }
+
+                    else -> {
+                        ultimoDbValido = db
+                        resultadoTextView.text = getString(R.string.resultado_ruido, db)
+                        comprobarPermisoUbicacionYMostrarZona()
+                    }
                 }
 
                 botonMedir.isEnabled = true
@@ -84,7 +106,50 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
         }.start()
     }
 
-    private fun mostrarPermisoDenegado() {
+    private fun comprobarPermisoUbicacionYMostrarZona() {
+        val permisoConcedido = ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+
+        if (permisoConcedido) {
+            mostrarResultadoConZona()
+        } else {
+            if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.permiso_ubicacion_explicacion),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
+            requestLocationPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+        }
+    }
+
+    private fun mostrarResultadoConZona() {
+        val db = ultimoDbValido ?: return
+        val location = locationHelper.getLastKnownLocation()
+
+        if (location == null) {
+            mostrarResultadoConInfo(getString(R.string.ubicacion_no_disponible))
+            return
+        }
+
+        val zona = ZoneManager.toReducedGeohash(
+            latitude = location.latitude,
+            longitude = location.longitude
+        )
+
+        resultadoTextView.text = getString(R.string.resultado_ruido_con_zona, db, zona)
+    }
+
+    private fun mostrarResultadoConInfo(info: String) {
+        val db = ultimoDbValido ?: return
+        resultadoTextView.text = getString(R.string.resultado_ruido_con_info, db, info)
+    }
+
+    private fun mostrarPermisoMicrofonoDenegado() {
         resultadoTextView.text = getString(R.string.permiso_microfono_denegado)
     }
 }
