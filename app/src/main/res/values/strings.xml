@@ -48,4 +48,10 @@
     <string name="medicion_guardada">Medición guardada correctamente.</string>
     <string name="error_guardar_medicion">No se ha podido guardar la medición.</string>
     <string name="resultado_ruido_zona_estado">Nivel aproximado: %.1f dB\nZona aproximada: %s\n%s</string>
+
+    <!-- TODO -->
+    <string name="boton_actualizar_historico">Actualizar histórico</string>
+    <string name="historico_cargando">Cargando histórico…</string>
+    <string name="historico_sin_datos">No hay datos históricos disponibles.</string>
+    <string name="historico_error">No se ha podido cargar el histórico.</string>
 </resources>

@@ -4,6 +4,7 @@ import com.alejandromartin.dbmap.model.AgregadoZona
 import com.alejandromartin.dbmap.model.Medicion
 import com.alejandromartin.dbmap.model.Zona
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 class FirestoreManager {
 
@@ -79,6 +80,25 @@ class FirestoreManager {
 
     private fun crearAgregadoId(zonaId: String, fechaInicio: Long): String {
         return "${zonaId}_15min_$fechaInicio"
+    }
+
+    fun obtenerUltimosAgregados(
+        onSuccess: (List<AgregadoZona>) -> Unit,
+        onError: (Exception) -> Unit
+    ) {
+        db.collection("agregados_zona")
+            .orderBy("fechaInicio", Query.Direction.DESCENDING)
+            .limit(20)
+            .get()
+            .addOnSuccessListener { result ->
+                val agregados = result.documents.mapNotNull { document ->
+                    document.toObject(AgregadoZona::class.java)
+                }
+                onSuccess(agregados)
+            }
+            .addOnFailureListener { exception ->
+                onError(exception)
+            }
     }
 
     companion object {

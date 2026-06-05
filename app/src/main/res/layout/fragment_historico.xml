@@ -17,15 +17,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/textHistoricoPlaceholder"
+    <Button
+        android:id="@+id/botonActualizarHistorico"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/historico_placeholder"
-        android:textSize="18sp"
-        android:layout_marginTop="32dp"
+        android:text="@string/boton_actualizar_historico"
+        android:layout_marginTop="24dp"
         app:layout_constraintTop_toBottomOf="@id/textTituloHistorico"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/botonActualizarHistorico"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/textHistoricoResultado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/historico_placeholder"
+            android:textSize="16sp" />
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
