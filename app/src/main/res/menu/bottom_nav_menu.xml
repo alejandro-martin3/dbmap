@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@id/medirFragment"
+        android:icon="@android:drawable/ic_btn_speak_now"
+        android:title="@string/menu_medicion" />
+
+    <item
+        android:id="@id/mapaFragment"
+        android:icon="@android:drawable/ic_dialog_map"
+        android:title="@string/menu_mapa" />
+
+    <item
+        android:id="@id/historicoFragment"
+        android:icon="@android:drawable/ic_menu_recent_history"
+        android:title="@string/menu_historico" />
+
+    <item
+        android:id="@id/ajustesFragment"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="@string/menu_ajustes" />
+
+</menu>

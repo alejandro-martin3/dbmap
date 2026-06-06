@@ -2,6 +2,14 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="dbmap_background">#F5F7FA</color>
+    <color name="dbmap_card">#FFFFFF</color>
+    <color name="dbmap_primary">#1565C0</color>
+    <color name="dbmap_primary_dark">#0D47A1</color>
+    <color name="dbmap_text_primary">#1F2933</color>
+    <color name="dbmap_text_secondary">#5C6670</color>
+    <color name="dbmap_success">#2E7D32</color>
+    <color name="dbmap_warning_background">#EAF2FF</color>
 
     <color name="ruido_muy_bajo">#2E7D32</color>
     <color name="ruido_bajo">#8BC34A</color>

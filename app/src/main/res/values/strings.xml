@@ -35,6 +35,7 @@
     <string name="resultado_ruido">Nivel aproximado: %.1f dB</string>
     <string name="error_medicion">No se ha podido realizar la medición.</string>
     <string name="senal_demasiado_baja">Señal demasiado baja para estimar el ruido.</string>
+    <string name="subtitulo_medicion">Realiza una medición puntual del ruido ambiental.</string>
 
     <!-- Mensajes ubicacion mediciones -->
     <string name="permiso_ubicacion_denegado">Permiso de ubicación denegado. La medición no puede asociarse a una zona.</string>
@@ -70,8 +71,21 @@
     <!-- Mensajes leyenda del mapa -->
     <string name="mapa_leyenda_titulo">Nivel de ruido</string>
     <string name="mapa_leyenda_muy_bajo">&lt; 40 dB</string>
-    <string name="mapa_leyenda_bajo">40 - 50 dB</string>
-    <string name="mapa_leyenda_medio">50 - 60 dB</string>
-    <string name="mapa_leyenda_alto">60 - 70 dB</string>
+    <string name="mapa_leyenda_bajo">40 – 50 dB</string>
+    <string name="mapa_leyenda_medio">50 – 60 dB</string>
+    <string name="mapa_leyenda_alto">60 – 70 dB</string>
     <string name="mapa_leyenda_muy_alto">≥ 70 dB</string>
+
+    <!-- Mensajes pantalla historicos -->
+    <string name="subtitulo_historico">Consulta los últimos registros agregados por zona.</string>
+    <string name="historico_card_zona">Zona %s</string>
+    <string name="historico_card_ruido">%.1f dB</string>
+    <string name="historico_card_periodo">Periodo: %s</string>
+    <string name="historico_card_inicio">Inicio: %s</string>
+    <string name="historico_card_muestras">Muestras: %d</string>
+
+    <!-- Mensajes pantalla ajustes -->
+    <string name="subtitulo_ajustes">Configura cómo se muestra la información en la app.</string>
+    <string name="ajustes_centrar_mapa_descripcion">Al abrir el mapa, se centra automáticamente en las últimas zonas medidas.</string>
+    <string name="ajustes_aviso_privacidad_descripcion">Muestra en la pantalla de medición un recordatorio sobre privacidad.</string>
 </resources>

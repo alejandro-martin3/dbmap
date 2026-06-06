@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dbmap_background"
     android:padding="24dp">
 
     <TextView
@@ -11,41 +12,99 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/titulo_ajustes"
-        android:textSize="24sp"
+        android:textColor="@color/dbmap_text_primary"
+        android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/textDescripcionAjustes"
+        android:id="@+id/textSubtituloAjustes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/ajustes_descripcion"
+        android:text="@string/subtitulo_ajustes"
+        android:textColor="@color/dbmap_text_secondary"
         android:textSize="16sp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@id/textTituloAjustes"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchCentrarMapa"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardCentrarMapa"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/ajustes_centrar_mapa"
         android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@id/textDescripcionAjustes"
+        app:cardBackgroundColor="@color/dbmap_card"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="2dp"
+        app:contentPadding="18dp"
+        app:layout_constraintTop_toBottomOf="@id/textSubtituloAjustes"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchAvisoPrivacidad"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchCentrarMapa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ajustes_centrar_mapa"
+                android:textColor="@color/dbmap_text_primary"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ajustes_centrar_mapa_descripcion"
+                android:textColor="@color/dbmap_text_secondary"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardAvisoPrivacidad"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/ajustes_aviso_privacidad"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/switchCentrarMapa"
+        app:cardBackgroundColor="@color/dbmap_card"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="2dp"
+        app:contentPadding="18dp"
+        app:layout_constraintTop_toBottomOf="@id/cardCentrarMapa"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchAvisoPrivacidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ajustes_aviso_privacidad"
+                android:textColor="@color/dbmap_text_primary"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ajustes_aviso_privacidad_descripcion"
+                android:textColor="@color/dbmap_text_secondary"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
