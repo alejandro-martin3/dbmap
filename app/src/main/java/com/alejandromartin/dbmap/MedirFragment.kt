@@ -130,47 +130,56 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
 
     private fun mostrarResultadoConZona() {
         val db = ultimoDbValido ?: return
-        val location = locationHelper.getLastKnownLocation()
 
-        if (location == null) {
-            mostrarResultadoConInfo(getString(R.string.ubicacion_no_disponible))
-            return
-        }
+        locationHelper.getCurrentLocation(
+            onSuccess = { location ->
+                if (!isAdded) return@getCurrentLocation
 
-        val zona = ZoneManager.toReducedGeohash(
-            latitude = location.latitude,
-            longitude = location.longitude
-        )
+                if (location == null) {
+                    mostrarResultadoConInfo(getString(R.string.ubicacion_no_disponible))
+                    return@getCurrentLocation
+                }
 
-        resultadoTextView.text = getString(
-            R.string.resultado_ruido_zona_estado,
-            db,
-            zona,
-            getString(R.string.guardando_medicion)
-        )
-
-        firestoreManager.guardarMedicion(
-            zonaId = zona,
-            nivelRuido = db,
-            onSuccess = {
-                if (!isAdded) return@guardarMedicion
+                val zona = ZoneManager.toReducedGeohash(
+                    latitude = location.latitude,
+                    longitude = location.longitude
+                )
 
                 resultadoTextView.text = getString(
                     R.string.resultado_ruido_zona_estado,
                     db,
                     zona,
-                    getString(R.string.medicion_guardada)
+                    getString(R.string.guardando_medicion)
+                )
+
+                firestoreManager.guardarMedicion(
+                    zonaId = zona,
+                    nivelRuido = db,
+                    onSuccess = {
+                        if (!isAdded) return@guardarMedicion
+
+                        resultadoTextView.text = getString(
+                            R.string.resultado_ruido_zona_estado,
+                            db,
+                            zona,
+                            getString(R.string.medicion_guardada)
+                        )
+                    },
+                    onError = {
+                        if (!isAdded) return@guardarMedicion
+
+                        resultadoTextView.text = getString(
+                            R.string.resultado_ruido_zona_estado,
+                            db,
+                            zona,
+                            getString(R.string.error_guardar_medicion)
+                        )
+                    }
                 )
             },
             onError = {
-                if (!isAdded) return@guardarMedicion
-
-                resultadoTextView.text = getString(
-                    R.string.resultado_ruido_zona_estado,
-                    db,
-                    zona,
-                    getString(R.string.error_guardar_medicion)
-                )
+                if (!isAdded) return@getCurrentLocation
+                mostrarResultadoConInfo(getString(R.string.ubicacion_no_disponible))
             }
         )
     }

@@ -5,35 +5,37 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationManager
 import androidx.core.content.ContextCompat
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 
 class LocationHelper(private val context: Context) {
 
+    private val fusedLocationClient =
+        LocationServices.getFusedLocationProviderClient(context)
+
     @SuppressLint("MissingPermission")
-    fun getLastKnownLocation(): Location? {
+    fun getCurrentLocation(
+        onSuccess: (Location?) -> Unit,
+        onError: (Exception) -> Unit
+    ) {
         val hasPermission = ContextCompat.checkSelfPermission(
             context,
             Manifest.permission.ACCESS_COARSE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
 
-        if (!hasPermission) return null
+        if (!hasPermission) {
+            onSuccess(null)
+            return
+        }
 
-        val locationManager =
-            context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
-        val providers = listOf(
-            LocationManager.NETWORK_PROVIDER,
-            LocationManager.GPS_PROVIDER,
-            LocationManager.PASSIVE_PROVIDER
-        )
-
-        return providers
-            .mapNotNull { provider ->
-                runCatching {
-                    locationManager.getLastKnownLocation(provider)
-                }.getOrNull()
+        fusedLocationClient
+            .getCurrentLocation(Priority.PRIORITY_BALANCED_POWER_ACCURACY, null)
+            .addOnSuccessListener { location ->
+                onSuccess(location)
             }
-            .maxByOrNull { it.time }
+            .addOnFailureListener { exception ->
+                onError(exception)
+            }
     }
 }
