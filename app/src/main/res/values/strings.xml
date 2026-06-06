@@ -54,4 +54,9 @@
     <string name="historico_cargando">Cargando histórico…</string>
     <string name="historico_sin_datos">No hay datos históricos disponibles.</string>
     <string name="historico_error">No se ha podido cargar el histórico.</string>
+
+    <!-- TODO -->
+    <string name="ajustes_centrar_mapa">Centrar mapa en las últimas mediciones</string>
+    <string name="ajustes_aviso_privacidad">Mostrar aviso de privacidad</string>
+    <string name="ajustes_descripcion">Estas opciones se guardan solo en el dispositivo.</string>
 </resources>

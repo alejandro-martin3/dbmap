@@ -14,9 +14,11 @@ class MapaFragment : Fragment(R.layout.fragment_mapa) {
 
     private var mapView: MapView? = null
     private val firestoreManager = FirestoreManager()
+    private lateinit var configManager: ConfigManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        configManager = ConfigManager(requireContext().applicationContext)
 
         Configuration.getInstance().userAgentValue = requireContext().packageName
 
@@ -68,7 +70,7 @@ class MapaFragment : Fragment(R.layout.fragment_mapa) {
             mapa.overlays.add(marcador)
         }
 
-        if (ultimosPorZona.isNotEmpty()) {
+        if (ultimosPorZona.isNotEmpty() && configManager.centrarMapaAutomaticamente()) {
             val primeraZona = ZoneManager.getApproximateCenter(ultimosPorZona.first().zonaId)
             mapa.controller.setCenter(GeoPoint(primeraZona.first, primeraZona.second))
             mapa.controller.setZoom(14.0)
