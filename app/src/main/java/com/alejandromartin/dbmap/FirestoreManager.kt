@@ -88,7 +88,7 @@ class FirestoreManager {
     ) {
         db.collection("agregados_zona")
             .orderBy("fechaInicio", Query.Direction.DESCENDING)
-            .limit(20)
+            .limit(100)
             .get()
             .addOnSuccessListener { result ->
                 val agregados = result.documents.mapNotNull { document ->

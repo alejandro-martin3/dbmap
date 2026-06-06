@@ -101,8 +101,10 @@ class MapaFragment : Fragment(R.layout.fragment_mapa) {
 
     private fun obtenerColorZona(nivelRuido: Double): Int {
         return when {
-            nivelRuido < 50.0 -> Color.rgb(76, 175, 80)
-            nivelRuido < 65.0 -> Color.rgb(255, 193, 7)
+            nivelRuido < 40.0 -> Color.rgb(46, 125, 50)
+            nivelRuido < 50.0 -> Color.rgb(139, 195, 74)
+            nivelRuido < 60.0 -> Color.rgb(255, 235, 59)
+            nivelRuido < 70.0 -> Color.rgb(255, 152, 0)
             else -> Color.rgb(244, 67, 54)
         }
     }
