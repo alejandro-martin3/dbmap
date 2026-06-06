@@ -35,12 +35,18 @@ class HistoricoFragment : Fragment(R.layout.fragment_historico) {
     private fun cargarHistorico() {
         mostrarMensaje(getString(R.string.historico_cargando))
 
+        if (!AppUtils.hayConexion(requireContext())) {
+            mostrarMensaje(getString(R.string.sin_conexion_historico))
+            return
+        }
+
         firestoreManager.obtenerUltimosAgregados(
             onSuccess = { agregados ->
                 if (!isAdded) return@obtenerUltimosAgregados
 
                 if (agregados.isEmpty()) {
                     mostrarMensaje(getString(R.string.historico_sin_datos))
+
                 } else {
                     mostrarAgregados(agregados)
                 }

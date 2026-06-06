@@ -6,6 +6,7 @@
     <string name="resultado_medicion_inicial">Pulsa el botón para iniciar una medición</string>
     <string name="boton_medir_ruido">Medir ruido</string>
     <string name="medicion_pendiente">Medición pendiente de implementar</string>
+    <string name="sin_conexion_medicion">No hay conexión a internet. Activa la conexión para realizar y guardar la medición.</string>
 
     <!-- Pantalla de mapa -->
     <string name="titulo_mapa">Mapa de ruido</string>
@@ -35,6 +36,7 @@
     <string name="error_medicion">No se ha podido realizar la medición.</string>
     <string name="senal_demasiado_baja">Señal demasiado baja para estimar el ruido.</string>
     <string name="subtitulo_medicion">Realiza una medición puntual del ruido ambiental.</string>
+    <string name="sin_conexion_guardado">No hay conexión a internet. La medición no se ha podido guardar.</string>
 
     <!-- Mensajes ubicacion mediciones -->
     <string name="permiso_ubicacion_denegado">Permiso de ubicación denegado. La medición no puede asociarse a una zona.</string>
@@ -42,6 +44,7 @@
     <string name="ubicacion_no_disponible">No se ha podido obtener la zona aproximada.</string>
     <string name="resultado_ruido_con_zona">Nivel aproximado: %.1f dB\nZona aproximada: %s</string>
     <string name="resultado_ruido_con_info">Nivel aproximado: %.1f dB\n%s</string>
+    <string name="resultado_zona">Zona aproximada: %s</string>
 
     <!-- Mensajes guardado de mediciones en base de datos -->
     <string name="guardando_medicion">Guardando medición…</string>
@@ -82,6 +85,7 @@
     <string name="historico_card_periodo">Periodo: %s</string>
     <string name="historico_card_inicio">Inicio: %s</string>
     <string name="historico_card_muestras">Muestras: %d</string>
+    <string name="sin_conexion_historico">No hay conexión a internet. No se puede cargar el histórico.</string>
 
     <!-- Mensajes pantalla ajustes -->
     <string name="subtitulo_ajustes">Configura cómo se muestra la información en la app.</string>
