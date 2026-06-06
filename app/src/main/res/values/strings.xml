@@ -66,4 +66,12 @@
     <!-- TODO -->
     <string name="mapa_zona_titulo">Zona %s</string>
     <string name="mapa_zona_snippet">Ruido medio: %.1f dB\nMuestras: %d</string>
+
+    <!-- Mensajes leyenda del mapa -->
+    <string name="mapa_leyenda_titulo">Nivel de ruido</string>
+    <string name="mapa_leyenda_muy_bajo">&lt; 40 dB</string>
+    <string name="mapa_leyenda_bajo">40 - 50 dB</string>
+    <string name="mapa_leyenda_medio">50 - 60 dB</string>
+    <string name="mapa_leyenda_alto">60 - 70 dB</string>
+    <string name="mapa_leyenda_muy_alto">≥ 70 dB</string>
 </resources>

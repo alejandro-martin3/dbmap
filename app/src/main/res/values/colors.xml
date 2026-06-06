@@ -2,4 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="ruido_muy_bajo">#2E7D32</color>
+    <color name="ruido_bajo">#8BC34A</color>
+    <color name="ruido_medio">#FFEB3B</color>
+    <color name="ruido_alto">#FF9800</color>
+    <color name="ruido_muy_alto">#F44336</color>
+    <color name="leyenda_fondo">#DDFFFFFF</color>
 </resources>
