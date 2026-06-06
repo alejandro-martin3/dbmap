@@ -16,6 +16,7 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
     private lateinit var resultadoTextView: TextView
     private lateinit var botonMedir: Button
     private lateinit var locationHelper: LocationHelper
+    private lateinit var configManager: ConfigManager
 
     private val noiseService = NoiseService()
     private val firestoreManager = FirestoreManager()
@@ -49,6 +50,12 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
         resultadoTextView = view.findViewById(R.id.textResultadoRuido)
         botonMedir = view.findViewById(R.id.botonMedir)
         locationHelper = LocationHelper(requireContext().applicationContext)
+
+        configManager = ConfigManager(requireContext().applicationContext)
+
+        val avisoPrivacidadTextView = view.findViewById<TextView>(R.id.textAvisoPrivacidad)
+        avisoPrivacidadTextView.visibility =
+            if (configManager.mostrarAvisoPrivacidad()) View.VISIBLE else View.GONE
 
         botonMedir.setOnClickListener {
             comprobarPermisoMicrofonoYMedir()
