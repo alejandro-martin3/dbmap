@@ -1,5 +1,6 @@
 package com.alejandromartin.dbmap
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -8,7 +9,7 @@ import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.Polygon
 
 class MapaFragment : Fragment(R.layout.fragment_mapa) {
 
@@ -18,8 +19,8 @@ class MapaFragment : Fragment(R.layout.fragment_mapa) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        configManager = ConfigManager(requireContext().applicationContext)
 
+        configManager = ConfigManager(requireContext().applicationContext)
         Configuration.getInstance().userAgentValue = requireContext().packageName
 
         mapView = view.findViewById(R.id.mapaRuido)
@@ -42,7 +43,7 @@ class MapaFragment : Fragment(R.layout.fragment_mapa) {
                 mostrarAgregadosEnMapa(agregados)
             },
             onError = {
-                // En esta primera versión dejamos el mapa cargado aunque no haya datos.
+                // Si falla la carga, dejamos el mapa visible igualmente.
             }
         )
     }
@@ -55,19 +56,8 @@ class MapaFragment : Fragment(R.layout.fragment_mapa) {
         val ultimosPorZona = agregados.distinctBy { it.zonaId }
 
         ultimosPorZona.forEach { agregado ->
-            val centroZona = ZoneManager.getApproximateCenter(agregado.zonaId)
-            val punto = GeoPoint(centroZona.first, centroZona.second)
-
-            val marcador = Marker(mapa).apply {
-                position = punto
-                setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                title = "Zona ${agregado.zonaId}"
-                snippet =
-                    "Ruido medio: ${"%.1f".format(agregado.nivelRuidoPromedio)} dB\n" +
-                            "Muestras: ${agregado.numeroMuestras}"
-            }
-
-            mapa.overlays.add(marcador)
+            val rectangulo = crearRectanguloRuido(mapa, agregado)
+            mapa.overlays.add(rectangulo)
         }
 
         if (ultimosPorZona.isNotEmpty() && configManager.centrarMapaAutomaticamente()) {
@@ -77,6 +67,44 @@ class MapaFragment : Fragment(R.layout.fragment_mapa) {
         }
 
         mapa.invalidate()
+    }
+
+    private fun crearRectanguloRuido(
+        mapa: MapView,
+        agregado: AgregadoZona
+    ): Polygon {
+        val bounds = ZoneManager.getBounds(agregado.zonaId)
+        val color = obtenerColorZona(agregado.nivelRuidoPromedio)
+
+        val puntos = listOf(
+            GeoPoint(bounds.latMin, bounds.lonMin),
+            GeoPoint(bounds.latMin, bounds.lonMax),
+            GeoPoint(bounds.latMax, bounds.lonMax),
+            GeoPoint(bounds.latMax, bounds.lonMin)
+        )
+
+        return Polygon(mapa).apply {
+            setPoints(puntos)
+            fillPaint.color = color
+            fillPaint.alpha = 90
+            outlinePaint.color = color
+            outlinePaint.alpha = 190
+            outlinePaint.strokeWidth = 2f
+            title = getString(R.string.mapa_zona_titulo, agregado.zonaId)
+            snippet = getString(
+                R.string.mapa_zona_snippet,
+                agregado.nivelRuidoPromedio,
+                agregado.numeroMuestras
+            )
+        }
+    }
+
+    private fun obtenerColorZona(nivelRuido: Double): Int {
+        return when {
+            nivelRuido < 50.0 -> Color.rgb(76, 175, 80)
+            nivelRuido < 65.0 -> Color.rgb(255, 193, 7)
+            else -> Color.rgb(244, 67, 54)
+        }
     }
 
     override fun onResume() {

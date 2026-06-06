@@ -62,4 +62,8 @@
 
     <!-- TODO -->
     <string name="aviso_privacidad_medicion">Privacidad: la app no guarda audio ni ubicación exacta. Solo se almacena una zona aproximada.</string>
+
+    <!-- TODO -->
+    <string name="mapa_zona_titulo">Zona %s</string>
+    <string name="mapa_zona_snippet">Ruido medio: %.1f dB\nMuestras: %d</string>
 </resources>

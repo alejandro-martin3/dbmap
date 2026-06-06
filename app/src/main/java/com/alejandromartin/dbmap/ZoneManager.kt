@@ -4,7 +4,14 @@ object ZoneManager {
 
     private const val BASE32 = "0123456789bcdefghjkmnpqrstuvwxyz"
 
-    fun toReducedGeohash(latitude: Double, longitude: Double, precision: Int = 5): String {
+    data class GeohashBounds(
+        val latMin: Double,
+        val latMax: Double,
+        val lonMin: Double,
+        val lonMax: Double
+    )
+
+    fun toReducedGeohash(latitude: Double, longitude: Double, precision: Int = 6): String {
         var latMin = -90.0
         var latMax = 90.0
         var lonMin = -180.0
@@ -50,7 +57,7 @@ object ZoneManager {
         return geohash.toString()
     }
 
-    fun getApproximateCenter(geohash: String): Pair<Double, Double> {
+    fun getBounds(geohash: String): GeohashBounds {
         var latMin = -90.0
         var latMax = 90.0
         var lonMin = -180.0
@@ -82,8 +89,19 @@ object ZoneManager {
             }
         }
 
-        val centroLatitud = (latMin + latMax) / 2
-        val centroLongitud = (lonMin + lonMax) / 2
+        return GeohashBounds(
+            latMin = latMin,
+            latMax = latMax,
+            lonMin = lonMin,
+            lonMax = lonMax
+        )
+    }
+
+    fun getApproximateCenter(geohash: String): Pair<Double, Double> {
+        val bounds = getBounds(geohash)
+
+        val centroLatitud = (bounds.latMin + bounds.latMax) / 2
+        val centroLongitud = (bounds.lonMin + bounds.lonMax) / 2
 
         return Pair(centroLatitud, centroLongitud)
     }
