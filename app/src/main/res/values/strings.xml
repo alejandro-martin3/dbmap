@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">dBMap</string>
-    <string name="action_settings">Ajustes</string>
 
     <!-- Pantalla de medición -->
     <string name="titulo_medicion">Medición de ruido</string>
