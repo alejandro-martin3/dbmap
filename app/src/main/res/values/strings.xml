@@ -20,17 +20,17 @@
     <string name="titulo_ajustes">Ajustes</string>
     <string name="ajustes_placeholder">Aquí se configurarán preferencias de privacidad y visualización.</string>
 
-    <!-- Menu navegación -->
+    <!-- Menú de navegación inferior -->
     <string name="menu_medicion">Medición</string>
     <string name="menu_mapa">Mapa</string>
     <string name="menu_historico">Histórico</string>
     <string name="menu_ajustes">Ajustes</string>
 
-    <!-- Mensajes permisos -->
+    <!-- Mensajes de permisos -->
     <string name="permiso_microfono_denegado">Permiso de micrófono denegado. No se puede medir ruido.</string>
     <string name="permiso_microfono_explicacion">La app necesita usar el micrófono para calcular el nivel de ruido.</string>
 
-    <!-- Mensajes medicion ruido -->
+    <!-- Mensajes de medición de ruido -->
     <string name="midiendo_ruido">Midiendo ruido…</string>
     <string name="resultado_ruido">Nivel aproximado: %.1f dB</string>
     <string name="error_medicion">No se ha podido realizar la medición.</string>
@@ -38,7 +38,7 @@
     <string name="subtitulo_medicion">Realiza una medición puntual del ruido ambiental.</string>
     <string name="sin_conexion_guardado">No hay conexión a internet. La medición no se ha podido guardar.</string>
 
-    <!-- Mensajes ubicacion mediciones -->
+    <!-- Mensajes de ubicación en mediciones -->
     <string name="permiso_ubicacion_denegado">Permiso de ubicación denegado. La medición no puede asociarse a una zona.</string>
     <string name="permiso_ubicacion_explicacion">La app necesita una ubicación aproximada para asociar la medición a una zona.</string>
     <string name="ubicacion_no_disponible">No se ha podido obtener la zona aproximada.</string>
@@ -46,31 +46,31 @@
     <string name="resultado_ruido_con_info">Nivel aproximado: %.1f dB\n%s</string>
     <string name="resultado_zona">Zona aproximada: %s</string>
 
-    <!-- Mensajes guardado de mediciones en base de datos -->
+    <!-- Mensajes de guardado de mediciones en Firebase Firestore -->
     <string name="guardando_medicion">Guardando medición…</string>
     <string name="medicion_guardada">Medición guardada correctamente.</string>
     <string name="error_guardar_medicion">No se ha podido guardar la medición.</string>
     <string name="resultado_ruido_zona_estado">Nivel aproximado: %.1f dB\nZona aproximada: %s\n%s</string>
 
-    <!-- TODO -->
+    <!-- Mensajes de la pantalla de histórico -->
     <string name="boton_actualizar_historico">Actualizar histórico</string>
     <string name="historico_cargando">Cargando histórico…</string>
     <string name="historico_sin_datos">No hay datos históricos disponibles.</string>
     <string name="historico_error">No se ha podido cargar el histórico.</string>
 
-    <!-- TODO -->
+    <!-- Opciones de la pantalla de ajustes -->
     <string name="ajustes_centrar_mapa">Centrar mapa en las últimas mediciones</string>
     <string name="ajustes_aviso_privacidad">Mostrar aviso de privacidad</string>
     <string name="ajustes_descripcion">Estas opciones se guardan solo en el dispositivo.</string>
 
-    <!-- TODO -->
+    <!-- Aviso de privacidad en la pantalla de medición -->
     <string name="aviso_privacidad_medicion">Privacidad: la app no guarda audio ni ubicación exacta. Solo se almacena una zona aproximada.</string>
 
-    <!-- TODO -->
+    <!-- Textos para las zonas del mapa -->
     <string name="mapa_zona_titulo">Zona %s</string>
     <string name="mapa_zona_snippet">Ruido medio: %.1f dB\nMuestras: %d</string>
 
-    <!-- Mensajes leyenda del mapa -->
+    <!-- Leyenda del mapa de ruido -->
     <string name="mapa_leyenda_titulo">Nivel de ruido</string>
     <string name="mapa_leyenda_muy_bajo">&lt; 40 dB</string>
     <string name="mapa_leyenda_bajo">40 – 50 dB</string>
@@ -78,7 +78,7 @@
     <string name="mapa_leyenda_alto">60 – 70 dB</string>
     <string name="mapa_leyenda_muy_alto">≥ 70 dB</string>
 
-    <!-- Mensajes pantalla historicos -->
+    <!-- Textos de las tarjetas del histórico -->
     <string name="subtitulo_historico">Consulta los últimos registros agregados por zona.</string>
     <string name="historico_card_zona">Zona %s</string>
     <string name="historico_card_ruido">%.1f dB</string>
@@ -87,7 +87,7 @@
     <string name="historico_card_muestras">Muestras: %d</string>
     <string name="sin_conexion_historico">No hay conexión a internet. No se puede cargar el histórico.</string>
 
-    <!-- Mensajes pantalla ajustes -->
+    <!-- Descripciones de las opciones de ajustes -->
     <string name="subtitulo_ajustes">Configura cómo se muestra la información en la app.</string>
     <string name="ajustes_centrar_mapa_descripcion">Al abrir el mapa, se centra automáticamente en las últimas zonas medidas.</string>
     <string name="ajustes_aviso_privacidad_descripcion">Muestra en la pantalla de medición un recordatorio sobre privacidad.</string>
