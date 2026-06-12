@@ -10,15 +10,12 @@
 
     <!-- Pantalla de mapa -->
     <string name="titulo_mapa">Mapa de ruido</string>
-    <string name="mapa_placeholder">Aquí se mostrará Google Maps con la capa de calor.</string>
 
     <!-- Pantalla de histórico -->
     <string name="titulo_historico">Histórico de ruido</string>
-    <string name="historico_placeholder">Aquí se mostrarán datos anteriores por zona y franja horaria.</string>
 
     <!-- Pantalla de ajustes -->
     <string name="titulo_ajustes">Ajustes</string>
-    <string name="ajustes_placeholder">Aquí se configurarán preferencias de privacidad y visualización.</string>
 
     <!-- Menú de navegación inferior -->
     <string name="menu_medicion">Medición</string>
