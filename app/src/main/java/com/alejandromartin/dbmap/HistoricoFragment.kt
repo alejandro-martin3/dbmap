@@ -14,11 +14,20 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+/**
+ * Fragment que representa la pantalla de histórico.
+ * Consulta los últimos agregados de ruido almacenados en Firebase Firestore
+ * y los muestra como tarjetas ordenadas cronológicamente.
+ */
 class HistoricoFragment : Fragment(R.layout.fragment_historico) {
 
     private lateinit var contenedorHistorico: LinearLayout
     private val firestoreManager = FirestoreManager()
 
+    /**
+     * Inicializa el contenedor de tarjetas, el botón de actualización
+     * y lanza la primera carga del histórico al abrir la pantalla.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -32,6 +41,10 @@ class HistoricoFragment : Fragment(R.layout.fragment_historico) {
         cargarHistorico()
     }
 
+    /**
+     * Consulta los últimos agregados en Firestore y actualiza la vista.
+     * Muestra un aviso si no hay conexión a internet.
+     */
     private fun cargarHistorico() {
         mostrarMensaje(getString(R.string.historico_cargando))
 
@@ -46,7 +59,6 @@ class HistoricoFragment : Fragment(R.layout.fragment_historico) {
 
                 if (agregados.isEmpty()) {
                     mostrarMensaje(getString(R.string.historico_sin_datos))
-
                 } else {
                     mostrarAgregados(agregados)
                 }
@@ -58,6 +70,11 @@ class HistoricoFragment : Fragment(R.layout.fragment_historico) {
         )
     }
 
+    /**
+     * Limpia el contenedor y muestra un mensaje de texto informativo.
+     *
+     * @param mensaje Texto a mostrar en el contenedor.
+     */
     private fun mostrarMensaje(mensaje: String) {
         contenedorHistorico.removeAllViews()
 
@@ -70,6 +87,11 @@ class HistoricoFragment : Fragment(R.layout.fragment_historico) {
         contenedorHistorico.addView(textView)
     }
 
+    /**
+     * Limpia el contenedor y genera una tarjeta por cada agregado recibido.
+     *
+     * @param agregados Lista de agregados de ruido a mostrar.
+     */
     private fun mostrarAgregados(agregados: List<AgregadoZona>) {
         contenedorHistorico.removeAllViews()
 
@@ -78,6 +100,13 @@ class HistoricoFragment : Fragment(R.layout.fragment_historico) {
         }
     }
 
+    /**
+     * Crea y devuelve una tarjeta visual con los datos de un agregado de ruido.
+     * Muestra zona, nivel medio de ruido, periodo, fecha de inicio y número de muestras.
+     *
+     * @param agregado Agregado de ruido a representar.
+     * @return MaterialCardView con el contenido del agregado.
+     */
     private fun crearTarjetaAgregado(agregado: AgregadoZona): MaterialCardView {
         val context = requireContext()
 
@@ -106,6 +135,7 @@ class HistoricoFragment : Fragment(R.layout.fragment_historico) {
             setTextColor(ContextCompat.getColor(context, R.color.dbmap_text_primary))
         }
 
+        // El color del nivel de ruido varía según el rango de decibelios
         val ruidoTextView = TextView(context).apply {
             text = getString(R.string.historico_card_ruido, agregado.nivelRuidoPromedio)
             textSize = 28f
@@ -136,6 +166,12 @@ class HistoricoFragment : Fragment(R.layout.fragment_historico) {
         return card
     }
 
+    /**
+     * Crea un TextView con estilo secundario para mostrar datos de detalle en las tarjetas.
+     *
+     * @param texto Texto a mostrar.
+     * @return TextView con el estilo aplicado.
+     */
     private fun crearTextoSecundario(texto: String): TextView {
         return TextView(requireContext()).apply {
             text = texto
@@ -145,6 +181,12 @@ class HistoricoFragment : Fragment(R.layout.fragment_historico) {
         }
     }
 
+    /**
+     * Devuelve el color correspondiente al nivel de ruido según la escala de dBMap.
+     *
+     * @param nivelRuido Nivel de ruido en decibelios.
+     * @return Color como entero resuelto desde los recursos.
+     */
     private fun obtenerColorRuido(nivelRuido: Double): Int {
         val context = requireContext()
 
@@ -157,11 +199,23 @@ class HistoricoFragment : Fragment(R.layout.fragment_historico) {
         }
     }
 
+    /**
+     * Convierte un timestamp en una cadena de fecha legible con formato dd/MM/yyyy HH:mm.
+     *
+     * @param timestamp Timestamp en milisegundos.
+     * @return Fecha formateada como cadena de texto.
+     */
     private fun formatearFecha(timestamp: Long): String {
         val formato = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
         return formato.format(Date(timestamp))
     }
 
+    /**
+     * Convierte un valor en dp a píxeles según la densidad de pantalla del dispositivo.
+     *
+     * @param value Valor en dp.
+     * @return Valor equivalente en píxeles.
+     */
     private fun dp(value: Int): Int {
         return (value * resources.displayMetrics.density).toInt()
     }

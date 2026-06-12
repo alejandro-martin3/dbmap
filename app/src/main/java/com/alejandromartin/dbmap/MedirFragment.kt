@@ -12,6 +12,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 
+/**
+ * Fragment que representa la pantalla de medición de ruido.
+ * Gestiona los permisos de micrófono y ubicación, realiza la medición,
+ * obtiene la zona aproximada y guarda el resultado en Firebase Firestore.
+ */
 class MedirFragment : Fragment(R.layout.fragment_medir) {
 
     private lateinit var resultadoTextView: TextView
@@ -23,12 +28,16 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
 
     private val noiseService = NoiseService()
     private val firestoreManager = FirestoreManager()
+
+    // Último valor de decibelios válido obtenido, usado al solicitar la ubicación después
     private var ultimoDbValido: Double? = null
 
     companion object {
+        // Umbral mínimo de dB por debajo del cual la señal se considera no fiable
         private const val MIN_RELIABLE_DB = 20.0
     }
 
+    // Launcher para solicitar el permiso de micrófono en tiempo de ejecución
     private val requestAudioPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
@@ -38,6 +47,7 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
             }
         }
 
+    // Launcher para solicitar el permiso de ubicación en tiempo de ejecución
     private val requestLocationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
@@ -47,6 +57,10 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
             }
         }
 
+    /**
+     * Inicializa las vistas, configura el aviso de privacidad según preferencias
+     * y registra el listener del botón de medición.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -58,6 +72,7 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
         locationHelper = LocationHelper(requireContext().applicationContext)
         configManager = ConfigManager(requireContext().applicationContext)
 
+        // Muestra u oculta el aviso de privacidad según la preferencia guardada
         val avisoPrivacidadTextView = view.findViewById<TextView>(R.id.textAvisoPrivacidad)
         avisoPrivacidadTextView.visibility =
             if (configManager.mostrarAvisoPrivacidad()) View.VISIBLE else View.GONE
@@ -72,6 +87,10 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
         }
     }
 
+    /**
+     * Comprueba si el permiso de micrófono está concedido.
+     * Si no lo está, muestra una explicación y lanza la solicitud.
+     */
     private fun comprobarPermisoMicrofonoYMedir() {
         val permisoConcedido = ContextCompat.checkSelfPermission(
             requireContext(),
@@ -93,6 +112,10 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
         }
     }
 
+    /**
+     * Lanza la medición de ruido en un hilo secundario para no bloquear la UI.
+     * Desactiva el botón durante la medición y evalúa el resultado al terminar.
+     */
     private fun iniciarMedicion() {
         mostrarSoloMensaje(getString(R.string.midiendo_ruido))
         botonMedir.isEnabled = false
@@ -105,13 +128,13 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
 
                 when {
                     db <= 0.0 -> {
+                        // Error en la captura de audio
                         mostrarSoloMensaje(getString(R.string.error_medicion))
                     }
-
                     db < MIN_RELIABLE_DB -> {
+                        // Señal demasiado baja para ser fiable
                         mostrarSoloMensaje(getString(R.string.senal_demasiado_baja))
                     }
-
                     else -> {
                         ultimoDbValido = db
                         mostrarSoloMensaje(getString(R.string.resultado_ruido, db))
@@ -124,6 +147,10 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
         }.start()
     }
 
+    /**
+     * Comprueba si el permiso de ubicación está concedido.
+     * Si no lo está, muestra una explicación y lanza la solicitud.
+     */
     private fun comprobarPermisoUbicacionYMostrarZona() {
         val permisoConcedido = ContextCompat.checkSelfPermission(
             requireContext(),
@@ -145,6 +172,10 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
         }
     }
 
+    /**
+     * Obtiene la ubicación actual, convierte las coordenadas en zona geohash
+     * y guarda la medición en Firestore actualizando la UI en cada paso.
+     */
     private fun mostrarResultadoConZona() {
         val db = ultimoDbValido ?: return
 
@@ -162,6 +193,7 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
                     longitude = location.longitude
                 )
 
+                // Muestra el resultado con estado "guardando" mientras se sube a Firestore
                 mostrarResultadoCompleto(
                     nivelRuido = db,
                     zona = zona,
@@ -199,12 +231,25 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
         )
     }
 
+    /**
+     * Muestra un mensaje informativo ocultando las vistas de zona y estado.
+     *
+     * @param mensaje Texto a mostrar en el TextView principal.
+     */
     private fun mostrarSoloMensaje(mensaje: String) {
         resultadoTextView.text = mensaje
         zonaResultadoTextView.visibility = View.GONE
         estadoResultadoTextView.visibility = View.GONE
     }
 
+    /**
+     * Muestra el resultado completo de la medición: nivel de ruido, zona aproximada y estado.
+     *
+     * @param nivelRuido Nivel de ruido en decibelios.
+     * @param zona Geohash reducido de la zona aproximada.
+     * @param estado Mensaje de estado del guardado.
+     * @param estadoEsError Si es true, el estado se muestra en rojo.
+     */
     private fun mostrarResultadoCompleto(
         nivelRuido: Double,
         zona: String,
@@ -228,6 +273,7 @@ class MedirFragment : Fragment(R.layout.fragment_medir) {
         estadoResultadoTextView.setTextColor(colorEstado)
     }
 
+    /** Muestra el mensaje de permiso de micrófono denegado en el TextView principal. */
     private fun mostrarPermisoMicrofonoDenegado() {
         mostrarSoloMensaje(getString(R.string.permiso_microfono_denegado))
     }

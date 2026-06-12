@@ -6,10 +6,19 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.alejandromartin.dbmap.databinding.ActivityMainBinding
 
+/**
+ * Actividad principal de dBMap.
+ * Actúa como contenedor de la navegación inferior entre las cuatro pantallas principales:
+ * Medición, Mapa, Histórico y Ajustes.
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    /**
+     * Inicializa el layout, obtiene el NavController del NavHostFragment
+     * y lo conecta con la barra de navegación inferior.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -21,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         val navController = navHostFragment.navController
 
+        // Vincula la navegación inferior con el NavController para gestionar los fragments
         binding.bottomNavigation.setupWithNavController(navController)
     }
 }

@@ -15,11 +15,26 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 
+/**
+ * Gestiona la obtención de la ubicación aproximada del dispositivo.
+ * Utiliza FusedLocationProviderClient para solicitar una ubicación puntual
+ * con precisión balanceada, sin guardar ni exponer coordenadas exactas.
+ *
+ * @param context Contexto de la aplicación.
+ */
 class LocationHelper(private val context: Context) {
 
     private val fusedLocationClient =
         LocationServices.getFusedLocationProviderClient(context)
 
+    /**
+     * Solicita la ubicación actual del dispositivo de forma puntual.
+     * Si el permiso de ubicación no está concedido, devuelve null sin lanzar error.
+     * Si no se obtiene ubicación en 15 segundos, devuelve null por timeout.
+     *
+     * @param onSuccess Callback con la ubicación obtenida, o null si no está disponible.
+     * @param onError Callback ejecutado si se produce un error al solicitar la ubicación.
+     */
     @SuppressLint("MissingPermission")
     fun getCurrentLocation(
         onSuccess: (Location?) -> Unit,
@@ -30,6 +45,7 @@ class LocationHelper(private val context: Context) {
             Manifest.permission.ACCESS_COARSE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
 
+        // Sin permiso de ubicación no se puede continuar; se devuelve null sin error
         if (!hasPermission) {
             onSuccess(null)
             return
@@ -40,6 +56,7 @@ class LocationHelper(private val context: Context) {
 
         lateinit var locationCallback: LocationCallback
 
+        // Función interna para garantizar que el callback solo se ejecuta una vez
         fun finish(location: Location?) {
             if (finished) return
             finished = true
@@ -56,6 +73,7 @@ class LocationHelper(private val context: Context) {
             }
         }
 
+        // Solicita una única actualización de ubicación con precisión balanceada
         val locationRequest = LocationRequest.Builder(
             Priority.PRIORITY_BALANCED_POWER_ACCURACY,
             1000L
@@ -66,6 +84,7 @@ class LocationHelper(private val context: Context) {
             .setDurationMillis(15000L)
             .build()
 
+        // Timeout de 15 segundos: si no llega ubicación, se devuelve null
         handler.postDelayed({
             finish(null)
         }, 15000L)
