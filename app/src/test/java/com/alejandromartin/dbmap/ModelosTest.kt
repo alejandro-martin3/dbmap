@@ -9,8 +9,14 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
+/**
+ * Pruebas unitarias para los modelos de datos principales de dBMap.
+ * Verifica que Medicion, Zona y AgregadoZona se inicializan correctamente
+ * y conservan los valores asignados.
+ */
 class ModelosTest {
 
+    /** Comprueba que una Medicion creada sin parámetros tiene los valores por defecto esperados. */
     @Test
     fun medicionPorDefectoTieneValoresEsperados() {
         val medicion = Medicion()
@@ -22,6 +28,7 @@ class ModelosTest {
         assertTrue(medicion.fechaHora > 0L)
     }
 
+    /** Comprueba que una Medicion creada con valores los conserva correctamente. */
     @Test
     fun medicionConValoresMantieneLaInformacion() {
         val medicion = Medicion(
@@ -39,6 +46,7 @@ class ModelosTest {
         assertEquals(1718000000000L, medicion.fechaHora)
     }
 
+    /** Comprueba que una Zona creada sin parámetros tiene los valores por defecto esperados. */
     @Test
     fun zonaPorDefectoTieneValoresEsperados() {
         val zona = Zona()
@@ -47,6 +55,7 @@ class ModelosTest {
         assertTrue(zona.ultimaActualizacion > 0L)
     }
 
+    /** Comprueba que una Zona creada con valores los conserva correctamente. */
     @Test
     fun zonaConValoresMantieneLaInformacion() {
         val zona = Zona(
@@ -58,6 +67,7 @@ class ModelosTest {
         assertEquals(1718000000000L, zona.ultimaActualizacion)
     }
 
+    /** Comprueba que un AgregadoZona creado sin parámetros tiene los valores por defecto esperados. */
     @Test
     fun agregadoZonaPorDefectoTieneValoresEsperados() {
         val agregado = AgregadoZona()
@@ -71,6 +81,7 @@ class ModelosTest {
         assertEquals(0, agregado.numeroMuestras)
     }
 
+    /** Comprueba que un AgregadoZona creado con valores los conserva correctamente. */
     @Test
     fun agregadoZonaConValoresMantieneLaInformacion() {
         val agregado = AgregadoZona(

@@ -5,8 +5,13 @@ import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
+/**
+ * Pruebas unitarias para ZoneManager.
+ * Verifica la generación de geohashes, sus límites y el cálculo del centro aproximado.
+ */
 class ZoneManagerTest {
 
+    /** Comprueba que el geohash generado tiene exactamente 6 caracteres de precisión. */
     @Test
     fun geohashTienePrecisionSeisPorDefecto() {
         val geohash = ZoneManager.toReducedGeohash(
@@ -17,6 +22,7 @@ class ZoneManagerTest {
         assertEquals(6, geohash.length)
     }
 
+    /** Comprueba que la misma ubicación siempre produce el mismo geohash. */
     @Test
     fun mismaUbicacionGeneraMismoGeohash() {
         val geohash1 = ZoneManager.toReducedGeohash(
@@ -32,6 +38,7 @@ class ZoneManagerTest {
         assertEquals(geohash1, geohash2)
     }
 
+    /** Comprueba que ubicaciones geográficamente distintas producen geohashes diferentes. */
     @Test
     fun ubicacionesDistintasGeneranGeohashesDistintos() {
         val geohashBarcelona = ZoneManager.toReducedGeohash(
@@ -47,6 +54,7 @@ class ZoneManagerTest {
         assertNotEquals(geohashBarcelona, geohashMadrid)
     }
 
+    /** Comprueba que el geohash solo contiene caracteres del alfabeto base32 estándar. */
     @Test
     fun geohashSoloContieneCaracteresValidos() {
         val geohash = ZoneManager.toReducedGeohash(
@@ -59,6 +67,7 @@ class ZoneManagerTest {
         assertTrue(geohash.all { it in caracteresValidos })
     }
 
+    /** Comprueba que la ubicación original queda dentro de los límites del geohash generado. */
     @Test
     fun ubicacionOriginalEstaDentroDeSuGeohash() {
         val latitud = 41.4650
@@ -77,6 +86,7 @@ class ZoneManagerTest {
         assertTrue(longitud <= bounds.lonMax)
     }
 
+    /** Comprueba que los límites del geohash son coherentes: mínimo siempre menor que máximo. */
     @Test
     fun limitesDelGeohashSonCoherentes() {
         val geohash = ZoneManager.toReducedGeohash(
@@ -90,6 +100,7 @@ class ZoneManagerTest {
         assertTrue(bounds.lonMin < bounds.lonMax)
     }
 
+    /** Comprueba que el centro calculado cae dentro de los límites del geohash. */
     @Test
     fun centroCalculadoEstaDentroDeLosLimites() {
         val geohash = ZoneManager.toReducedGeohash(
@@ -106,6 +117,7 @@ class ZoneManagerTest {
         assertTrue(centro.second <= bounds.lonMax)
     }
 
+    /** Comprueba que el centro calculado corresponde exactamente al punto medio de los límites. */
     @Test
     fun centroCalculadoCorrespondeAlPuntoMedioDeLosLimites() {
         val geohash = ZoneManager.toReducedGeohash(
